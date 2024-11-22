@@ -36,10 +36,13 @@ app.use("/api/lists", authenticate, listRoutes); // All /lists routes will requi
 // Error handling middleware should always be the last middleware
 app.use(errorHandler);
 
-mongoose.connect("mongodb://localhost:27017/codelists-app", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.mongourl || "mongodb://localhost:27017/mern-auth",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("Connected to MongoDB"));
